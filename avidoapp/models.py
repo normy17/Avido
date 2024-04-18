@@ -72,6 +72,9 @@ class AdvertModel(models.Model):
     publication_date = models.DateTimeField(default=timezone.now, verbose_name='Дата публикации')
     is_displayed = models.BooleanField(default=True)
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         verbose_name = 'Объявление'
         verbose_name_plural = 'Объявления'

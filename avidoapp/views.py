@@ -1,13 +1,45 @@
 from django.contrib.auth import login, authenticate, logout
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
 
 from avidoapp.forms import *
 
 
 def main_view(request):
-    return render(request, 'main.html')
+    adverts = AdvertModel.objects.all()
+    return render(request, 'main.html', {'adverts': adverts})
+
+
+def create_advert(request, choice):
+    match choice:
+        case 1:
+            form1 = CarForm()
+        case 2:
+            form1 = HouseForm()
+        case 3:
+            form1 = JobForm()
+    form2 = AdvertForm()
+    form3 = ImageForm()
+    if request.method == 'POST':
+        form1 = CarForm(request.POST)
+        form2 = AdvertForm(request.POST)
+        form3 = ImageForm(request.POST)
+        if form1.is_valid() and form2.is_valid() and form3.is_valid():
+            advert_object = form1.save()
+            advert = form2.save(commit=False)
+            images = form3.save(commit=False)
+            advert.author = request.user
+            advert.ad_object = advert_object
+            advert.save()
+            images.advert = advert.id
+            images.save()
+            return redirect('main')
+    return render(request, 'create_advert.html', {'form1': form1, 'form2': form2, 'form3': form3})
+
+
+def advert_view(request, id):
+    advert = get_object_or_404(AdvertModel, id=id)
+    return render(request, 'advert_view.html', {'advert': advert})
 
 
 def registration_view(request):

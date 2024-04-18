@@ -5,10 +5,17 @@
     <title>Title</title>
 </head>
 <body>
-<h2>Главная страница</h2>
+<h2>Все объявления на сайте:</h2>
+{% for advert in adverts %}
+    <a href="{% url 'advert_view' advert.id %}">{{ advert }}</a>
+{% endfor %}
         <div style="text-align:right">
             <span>Вы авторизованы как <b>{{ user.username }}</b></span>
             <a href="{% url 'logout' %}">Выход</a>
         </div>
+<h3>Какое объявление создать?</h3>
+<a href="{% url 'create_advert' 1 %}">Авто</a>
+<a href="{% url 'create_advert' 2 %}">Недвижимость</a>
+<a href="{% url 'create_advert' 3 %}">Работа</a>
 </body>
 </html>
