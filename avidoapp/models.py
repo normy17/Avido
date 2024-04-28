@@ -7,6 +7,8 @@ from django.utils import timezone
 class User(AbstractUser):
     phone = models.CharField(max_length=12, verbose_name='Телефон')
     rating = models.FloatField(verbose_name='Рейтинг', default=0)
+    is_block = models.BooleanField(verbose_name='Блокировка', default=False)
+    time_unblock = models.DateTimeField("Время разблокировки", blank=True, null=True)
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -64,13 +66,13 @@ class AdObjectModel(models.Model):
 
 class AdvertModel(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор')
-    ad_object = models.ForeignKey(AdObjectModel, on_delete=models.CASCADE, verbose_name='Объект продажи')
+    ad_object = models.ForeignKey(AdObjectModel, on_delete=models.CASCADE, verbose_name='Объект продажи', null=True)
     title = models.CharField(max_length=256, verbose_name='Заголовок')
     description = models.TextField(verbose_name='Описание')
-    price = models.IntegerField(default=0, verbose_name='Цена')
+    price = models.IntegerField(verbose_name='Цена')
     address = models.CharField(max_length=256, verbose_name='Адрес')
     publication_date = models.DateTimeField(default=timezone.now, verbose_name='Дата публикации')
-    is_displayed = models.BooleanField(default=True)
+    is_displayed = models.BooleanField(default=True, verbose_name='Отображать?')
 
     def __str__(self):
         return self.title
@@ -92,7 +94,7 @@ class ChatModel(models.Model):
 class MessageModel(models.Model):
     chat = models.ForeignKey(ChatModel, on_delete=models.CASCADE, verbose_name='Чат')
     author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Автор сообщения')
-    creation_time = models.DateTimeField(verbose_name='Дата создания сообщения')
+    creation_time = models.DateTimeField(default=timezone.now, verbose_name='Дата создания сообщения')
     text = models.TextField(verbose_name='Текст')
 
     class Meta:
@@ -101,7 +103,7 @@ class MessageModel(models.Model):
 
 
 class ImageModel(models.Model):
-    images = models.ImageField(upload_to='images', verbose_name='Фотография')
+    image = models.ImageField(upload_to='images', verbose_name='Фотография', blank=True)
     advert = models.ForeignKey(AdvertModel, on_delete=models.CASCADE, verbose_name='Объявление')
 
     class Meta:

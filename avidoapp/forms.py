@@ -1,5 +1,5 @@
 from django import forms
-
+from multiupload.fields import MultiFileField
 from .models import *
 
 
@@ -14,7 +14,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'first_name', 'last_name', 'password', 'password2')
+        fields = ('email', 'username', 'first_name', 'last_name', 'password', 'password2', 'phone')
 
 
 class AuthForm(forms.Form):
@@ -46,7 +46,11 @@ class AdvertForm(forms.ModelForm):
         fields = ('title', 'description', 'price', 'address')
 
 
-class ImageForm(forms.ModelForm):
+class ImageForm(forms.Form):
+    photos = MultiFileField(min_num=1, max_num=10, max_file_size=1024*1024*5, label='Фотографии', required=False)
+
+
+class MessageForm(forms.ModelForm):
     class Meta:
-        model = ImageModel
-        fields = ('images', 'advert')
+        model = MessageModel
+        fields = ('text', )

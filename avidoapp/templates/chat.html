@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h3>Объявление: {{ advert.title }}</h3>
+<div style="width:30%;">
+    {% for message in messages %}
+    <div style="width:100%; position:relative">
+        <b>{{ message.author }}:</b> {{ message.text }}
+        <div style="text-align:right; position:absolute; right:0; top:0;">
+            {{ message.creation_time | date:"h:m" }}<br>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button>Отправить сообщение</button>
+    </form>
+</body>
+</html>

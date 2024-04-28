@@ -5,12 +5,16 @@
     <title>Title</title>
 </head>
 <body>
-{{ advert.title }}
-{{ advert.description }}
-{{ advert.price }}
-{{ advert.author }}
-{{ advert.address }}
-{{ advert.publication_date }}
-{{ advert.ad_object.car_make }}
+Заголовок: {{ advert.title }}<br>
+Описание: {{ advert.description }}<br>
+Цена: {{ advert.price }}<br>
+Автор: {{ advert.author }}<br>
+Адрес: {{ advert.address }}<br>
+Дата публикации: {{ advert.publication_date }}<br>
+{{ advert.ad_object.car_make }}<br>
+{% for image in images %}
+    <img src="{{ image.image.url }}" width="256" height="144">
+{% endfor %}
+<a href="{% url 'chat' advert.id %}">Чат с автором объявления</a>
 </body>
 </html>
