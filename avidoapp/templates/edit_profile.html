@@ -1,0 +1,8 @@
+{% extends 'profile_base.html' %}
+{% block c %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>Сохранить изменения</button>
+</form>
+{% endblock c %}

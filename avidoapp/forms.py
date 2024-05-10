@@ -14,12 +14,21 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('email', 'username', 'first_name', 'last_name', 'password', 'password2', 'phone')
+        fields = ('email', 'username', 'first_name', 'last_name', 'phone', 'avatar', 'password', 'password2')
 
 
 class AuthForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput())
+
+
+class EditProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'phone', 'avatar')
+        widgets = {
+            'avatar': forms.FileInput()
+        }
 
 
 class CarForm(forms.ModelForm):
@@ -37,13 +46,13 @@ class HouseForm(forms.ModelForm):
 class JobForm(forms.ModelForm):
     class Meta:
         model = AdObjectModel
-        fields = ('job_title', 'requirements', 'conditions', 'schedule', 'contacts')
+        fields = ('job_title', 'requirements', 'responsibilities', 'schedule')
 
 
 class AdvertForm(forms.ModelForm):
     class Meta:
         model = AdvertModel
-        fields = ('title', 'description', 'price', 'address')
+        fields = ('title', 'description', 'price', 'address', 'is_displayed')
 
 
 class ImageForm(forms.Form):

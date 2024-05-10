@@ -1,0 +1,16 @@
+{% extends 'profile_base.html' %}
+{% block c %}
+<h3>Мои объявления:</h3>
+{% for advert in my_adverts %}
+    <a href="{% url 'advert_view' advert.id 0 %}"><img src="{{ advert.imagemodel_set.first.image.url }}" style="width: 230px; height: 160px"></a><br>
+    <a href="{% url 'advert_view' advert.id 0 %}">{{ advert }}</a><br>
+    <b>{{ advert.price }} ₽</b><br>
+    Казань, {{ advert.address }}<br>
+    <a href="{% url 'edit_advert' advert.id %}">Редактировать</a> <a href="{% url 'delete_advert' advert.id %}">Удалить объявление</a>
+    {% if advert.is_displayed %}
+        Отображается
+    {% else %}
+        Не отбражается
+    {% endif %}<br><br>
+{% endfor %}
+{% endblock c %}

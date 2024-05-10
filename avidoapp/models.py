@@ -5,6 +5,7 @@ from django.utils import timezone
 
 
 class User(AbstractUser):
+    avatar = models.ImageField(upload_to='images', verbose_name='Аватар', blank=True, null=True)
     phone = models.CharField(max_length=12, verbose_name='Телефон')
     rating = models.FloatField(verbose_name='Рейтинг', default=0)
     is_block = models.BooleanField(verbose_name='Блокировка', default=False)
@@ -16,7 +17,7 @@ class User(AbstractUser):
 
 
 class AdObjectModel(models.Model):
-    car_make = models.CharField(max_length=256, verbose_name='Марка машины', null=True, blank=True)
+    car_make = models.CharField(max_length=256, verbose_name='Марка машины', null=True)
     car_model = models.CharField(max_length=256, verbose_name='Модель машины', null=True, blank=True)
     year_of_issue = models.IntegerField(verbose_name='Год выпуска', validators=[
         MaxValueValidator(2024),
@@ -24,40 +25,38 @@ class AdObjectModel(models.Model):
     ], default=2000, null=True, blank=True)
     color = models.CharField(max_length=256, verbose_name='Цвет', null=True, blank=True)
     body_type = models.CharField(max_length=256, verbose_name='Вид кузова', choices=(
-        ('Sedan', 'Седан'),
-        ('Hatchback', 'Хэтчбек'),
-        ('Pickup', 'Пикап'),
-        ('Limousine', 'Лимузин'),
-        ('Universal', 'Универсал'),
-        ('Minivan', 'Минивэн'),
-        ('Coupe', 'Купе'),
-        ('Cabriolet', 'Кабриолет')
+        ('Седан', 'Седан'),
+        ('Хэтчбек', 'Хэтчбек'),
+        ('Пикап', 'Пикап'),
+        ('Лимузин', 'Лимузин'),
+        ('Универсал', 'Универсал'),
+        ('Минивэн', 'Минивэн'),
+        ('Купе', 'Купе'),
+        ('Кабриолет', 'Кабриолет')
     ), null=True, blank=True)
     fuel_type = models.CharField(max_length=256, verbose_name='Вид топлива', choices=(
-        ('Petrol', 'Бензин'),
-        ('Diesel', 'Дизель'),
-        ('Propane', 'Пропан'),
-        ('Electricity', 'Электричество')
+        ('Бензин', 'Бензин'),
+        ('Дизель', 'Дизель'),
+        ('Пропан', 'Пропан'),
+        ('Электричество', 'Электричество')
     ), null=True, blank=True)
     mileage = models.IntegerField(verbose_name='Пробег', null=True, blank=True)
     property_type = models.CharField(max_length=256, verbose_name='Тип недвижимости', choices=(
-        ('Apartment', 'Квартира'),
-        ('House', 'Дом'),
-        ('Other', 'Прочее')
-    ), null=True, blank=True)
+        ('Квартира', 'Квартира'),
+        ('Дом', 'Дом'),
+        ('Прочее', 'Прочее')
+    ), null=True)
     area = models.IntegerField(verbose_name='Площадь', null=True, blank=True)
     rooms = models.IntegerField(verbose_name='Количество комнат', null=True, blank=True)
     floors = models.IntegerField(verbose_name='Этаж/этажность', null=True, blank=True)
     state = models.CharField(max_length=256, verbose_name='Состояние', choices=(
-        ('Primary housing', 'Первичное жилье'),
-        ('Secondary housing', 'Вторичное жилье')
+        ('Первичное жилье', 'Первичное жилье'),
+        ('Вторичное жилье', 'Вторичное жилье')
     ), null=True, blank=True)
-    job_title = models.CharField(max_length=256, null=True, blank=True, verbose_name='Название вакансии')
-    requirements = models.CharField(max_length=256, null=True, blank=True, verbose_name='Требования')
-    conditions = models.CharField(max_length=256, null=True, blank=True, verbose_name='Условия работы')
-    schedule = models.CharField(max_length=256, null=True, blank=True, verbose_name='График работы')
-    contacts = models.CharField(max_length=256, null=True, blank=True,
-                                verbose_name='Контактная информация работодателя')
+    job_title = models.CharField(max_length=256, null=True, verbose_name='Название вакансии')
+    requirements = models.TextField(null=True, blank=True, verbose_name='Требования')
+    responsibilities = models.TextField(null=True, blank=True, verbose_name='Обязанности')
+    schedule = models.TextField(null=True, blank=True, verbose_name='График работы')
 
     class Meta:
         verbose_name = 'Объект продажи'

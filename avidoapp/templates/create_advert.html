@@ -1,16 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form1.as_p }}
         {{ form2.as_p }}
         {{ form3.as_p }}
         <button>Сохранить объявление</button>
-    </form>
-</body>
-</html>
+    </form><br>
+    {% for image in images %}
+        <img src="{{ image.image.url }}" width="256" height="144"><a href="{% url 'delete_image' image.id %}">Удалить</a>
+    {% endfor %}
+{% endblock %}

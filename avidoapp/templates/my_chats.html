@@ -1,0 +1,11 @@
+{% extends 'profile_base.html' %}
+{% block c %}
+<h3>Мои сообщения:</h3>
+{% for chat in my_chats %}
+{% if chat.advert.author == request.user %}
+<a href="{% url 'author_chat' chat.id %}"><div>{{ chat.customer }} | {{ chat.messagemodel_set.last.author }}: {{ chat.messagemodel_set.last.text }}</div></a>
+{% else %}
+<a href="{% url 'customer_chat' chat.advert.id %}"><div>{{ chat.advert.author }} | {{ chat.messagemodel_set.last.author }}: {{ chat.messagemodel_set.last.text }}</div></a>
+{% endif %}
+{% endfor %}
+{% endblock c %}

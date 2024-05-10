@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+</head>
+<body>
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-a">
+            <a href="{% url 'main' %}">На главную</a>
+            <a href="{% url 'cars' %}">Автомобили</a>
+            <a href="{% url 'houses' %}">Недвижимость</a>
+            <a href="{% url 'jobs' %}">Работа</a>
+            <a href="{% url 'others' %}">Прочее</a>
+        </div>
+        <div>
+            {% if user.is_anonymous %}
+                <div class="navbar-b">
+                    <a href="{% url 'registration' %}">Регистрация</a>
+                    <a href="{% url 'auth' %}">Войти</a>
+                </div>
+            {% else %}
+                <div class="navbar-b">
+                    <a href="{% url 'my_profile' %}">
+                        <span>
+                            <img src="{{ user.avatar.url }}">
+                            <b>{{ user.username }}</b>
+                        </span>
+                    </a>
+                    <span class="navbar-b-span"><a href="{% url 'choice_advert' %}">Разместить объявление</a></span>
+                </div>
+            {% endif %}
+        </div>
+  </div>
+</nav>
+{% block content %}{% endblock content %}
+</body>
+</html>

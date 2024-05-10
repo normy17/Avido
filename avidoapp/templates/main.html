@@ -1,22 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h2>Все объявления на сайте:</h2>
-{% for advert in adverts %}
-    <a href="{% url 'advert_view' advert.id %}">{{ advert }}</a>
-{% endfor %}
-        <div style="text-align:right">
-            <span>Вы авторизованы как <b>{{ user.username }}</b></span>
-            <a href="{% url 'logout' %}">Выход</a>
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+{% block content %}
+<div class="search">
+    <a href="{% url 'main' %}"><img src="{% static 'img/Avido.png' %}"></a>
+    <form method="GET" action="{% url 'main' %}">
+        {% if query %}
+        <input type="search" placeholder="{{ query }}" aria-label="Search" name="q">
+        {% else %}
+        <input type="search" placeholder="Поиск по объявлениям" aria-label="Search" name="q">
+        {% endif %}
+        <button type="submit">Найти</button>
+    </form>
+</div>
+<div class="title-a">
+    {% if query %}
+    <h4><b>Все объявления по запросу «{{ query }}»</b></h4>
+    {% elif all_adverts %}
+    <h4><b>Все объявления на сайте</b></h4>
+    {% elif cars %}
+    <h4><b>Все объявления автомобилей</b></h4>
+    {% elif houses %}
+    <h4><b>Все объявления недвижимости</b></h4>
+    {% elif jobs %}
+    <h4><b>Все объявления вакансий</b></h4>
+    {% elif others %}
+    <h4><b>Все прочее объявления</b></h4>
+    {% endif %}
+</div>
+<div class="adverts">
+    {% for advert in adverts %}
+        <div class="advert">
+            <a href="{% url 'advert_view' advert.id 0 %}"><img src="{{ advert.imagemodel_set.first.image.url }}"></a><br>
+            <span class="ad"><b><a href="{% url 'advert_view' advert.id 0 %}">{{ advert }}</a></b><br></span>
+            <b>{{ advert.price|intcomma }} ₽</b><br>
+            <span class="advert-info">Казань, {{ advert.address }}<br>
+            {{ advert.publication_date }}</span>
         </div>
-<h3>Какое объявление создать?</h3>
-<a href="{% url 'create_advert' 1 %}">Авто</a>
-<a href="{% url 'create_advert' 2 %}">Недвижимость</a>
-<a href="{% url 'create_advert' 3 %}">Работа</a>
-<a href="{% url 'other_advert' %}">Прочее</a>
-</body>
-</html>
+    {% endfor %}
+</div>
+{% endblock %}

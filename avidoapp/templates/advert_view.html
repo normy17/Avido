@@ -1,20 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-Заголовок: {{ advert.title }}<br>
-Описание: {{ advert.description }}<br>
-Цена: {{ advert.price }}<br>
-Автор: {{ advert.author }}<br>
-Адрес: {{ advert.address }}<br>
-Дата публикации: {{ advert.publication_date }}<br>
-{{ advert.ad_object.car_make }}<br>
-{% for image in images %}
-    <img src="{{ image.image.url }}" width="256" height="144">
-{% endfor %}
-<a href="{% url 'chat' advert.id %}">Чат с автором объявления</a>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load humanize %}
+{% block content %}
+<div class="body-a">
+    <div class="advert-left">
+        <h2 class="title">{{ advert }}</h2>
+        {% if not advert.ad_object.job_title %}
+            <div class="main-image"><img src="{{ main_image.image.url }}"></div>
+            <div class="images">
+                {% for image in images %}
+                    <a href="{% url 'advert_view' advert.id forloop.counter0 %}"><div class="advert-image"><img src="{{ image.image.url }}"></div></a>
+                {% endfor %}<br>
+            </div>
+        {% endif %}
+        <div class="desc">
+            {% if advert.ad_object.car_make %}
+                <h4>Характеристики</h4>
+                Марка: {{ advert.ad_object.car_make }} <br>
+                Модель: {{ advert.ad_object.car_model }} <br>
+                Год выпуска: {{ advert.ad_object.year_of_issue }} <br>
+                Цвет: {{ advert.ad_object.color }} <br>
+                Вид кузова: {{ advert.ad_object.body_type }} <br>
+                Вид топлива: {{ advert.ad_object.fuel_type }} <br>
+                Пробег: {{ advert.ad_object.mileage|intcomma }} км<br><br><br>
+            {% endif %}
+            {% if advert.ad_object.property_type %}
+                <h4>О жилье</h4>
+                Тип недвижимости: {{ advert.ad_object.property_type }}<br>
+                Площадь: {{ advert.ad_object.area }} м²<br>
+                Количество комнат: {{ advert.ad_object.rooms }}<br>
+                Этаж/этажность: {{ advert.ad_object.floors }}<br>
+                Состояние: {{ advert.ad_object.state }}<br><br><br>
+            {% endif %}
+            {% if advert.ad_object.job_title %}
+                <h4>Условия</h4>
+                Требования: {{ advert.ad_object.requirements }}<br>
+                Обязанности: {{ advert.ad_object.responsibilities }}<br>
+                График работы: {{ advert.ad_object.schedule }}<br><br><br>
+            {% endif %}
+            <h4>Расположение</h4>
+            Республика Татарстан, Казань, {{ advert.address }}<br><br><br>
+            <h4>Описание</h4>
+            {{ advert.description }}<br><br><br>
+            <hr>
+            <span class="publ">Опубликовано {{ advert.publication_date }}</span><br><br><br>
+        </div>
+    </div>
+    <div class="advert-right">
+        <h2 class="title">{{ advert.price|intcomma }} ₽</h2>
+        <a href="#"><div class="phone">Позвонить через Авидо<p>{{ advert.author.phone|slice:":1" }} {{ advert.author.phone|slice:"1:4" }}
+         {{ advert.author.phone|slice:"4:7" }}-{{ advert.author.phone|slice:"7:9" }}-{{ advert.author.phone|slice:"9:11" }}</p></div></a><br>
+        {% if user.is_authenticated and advert.author != request.user %}
+            <a href="{% url 'customer_chat' advert.id %}"><div class="write-message">Написать сообщение</div></a>
+        {% endif %}
+        <div class="author-a">
+            <span>
+                <b>{{ advert.author.username }}</b><br>{{ advert.author.first_name }} {{ advert.author.last_name }}<br>
+                <span class="joined">На Авидо с {{ advert.author.date_joined | date:"M Y"}}</span>
+            </span>
+            <span><img src="{{ advert.author.avatar.url }}"></span>
+        </div>
+    </div>
+</div>
+{% endblock content %}

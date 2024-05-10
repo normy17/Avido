@@ -1,19 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     <h2>Регистрация</h2>
     {% if is_success %}
-        <p><b>Спасибо за регистрацию!</b></p>
+        <p><b>Спасибо за регистрацию!</b></p><br>
     {% else %}
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button>Зарегистрироваться</button>
         </form>
     {% endif %}
-</body>
-</html>
+{% endblock %}
