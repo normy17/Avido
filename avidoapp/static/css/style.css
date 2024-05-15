@@ -604,18 +604,14 @@ a:hover {
     font-size: 12px;
     color: gray;
 }
-.send-message {
-    display: flex;
-    flex-direction: column;
-}
 .send-message textarea {
-    width: 600px;
+    width: 610px;
     height: 40px;
     padding: 7px 0 0 15px;
     border: none;
     outline: 3px solid lightgray;
     border-radius: 10px;
-    margin-bottom: -48px;
+    margin-top: 15px;
 }
 .send-message textarea::-webkit-resizer {
     display: none;
@@ -624,14 +620,15 @@ a:hover {
     outline: 3px solid #80d4ff;
 }
 .send-message button {
-    margin-left: 610px;
+    margin-top: -48px;
     width: 100px;
     height: 45px;
     color: gray;
     border: none;
     border-radius: 10px;
     background-color: lightgray;
-    align-self: flex-start;
+    display: block;
+    margin-left: auto;
 }
 .send-message button:hover {
     background-color: darkgray;
