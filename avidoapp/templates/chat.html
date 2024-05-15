@@ -1,19 +1,78 @@
-{% extends 'base.html' %}
-{% block content %}
-<h3>Объявление: {{ advert.title }}</h3>
-<div style="width:30%;">
-    {% for message in messages %}
-    <div style="width:100%; position:relative">
-        <b>{{ message.author }}:</b> {{ message.text }}
-        <div style="text-align:right; position:absolute; right:0; top:0;">
-            {{ message.creation_time | date:"h:i" }}<br>
+{% extends 'profile_base.html' %}
+{% load static %}
+{% load humanize %}
+{% block c %}
+<div>
+    <div class="chat-header">
+        <a href="{% url 'my_chats' %}"><div class="back">←</div></a>
+        {% if chat.advert.author == request.user %}
+        <div class="advert-imgs">
+            <div class="img1">
+                {% if chat.advert.imagemodel_set.first.image %}
+                <img src="{{ chat.advert.imagemodel_set.first.image.url }}">
+                {% else %}
+                <img src="{% static 'img/no_photo.png' %}">
+                {% endif %}
+            </div>
+            <div class="img2"><img src="{{ chat.customer.avatar.url }}"></div>
+        </div>
+        <div class="chat-info">
+            <span class="chat-info-a">{{ chat.customer.username }}</span><br>
+            <span class="chat-info-b">{{ chat.advert }} · {{ chat.advert.price|intcomma }} ₽</span>
+        </div>
+        {% else %}
+        <div class="advert-imgs">
+            <div class="img1">
+                {% if advert.imagemodel_set.first.image %}
+                <img src="{{ advert.imagemodel_set.first.image.url }}">
+                {% else %}
+                <img src="{% static 'img/no_photo.png' %}">
+                {% endif %}
+            </div>
+            <div class="img2"><img src="{{ advert.author.avatar.url }}"></div>
+        </div>
+        <div class="chat-info">
+            <span class="chat-info-a">{{ advert.author.username }}</span><br>
+            <span class="chat-info-b">{{ advert }} · {{ advert.price|intcomma }} ₽</span><br>
+        </div>
+        {% endif %}
+    </div>
+    <div class="chat-window">
+        <div class="messages">
+            {% for date, messages in messages_by_date.items %}
+                {% for message in messages %}
+                    {% if forloop.counter0 == 0 %}
+                    <div class="chat-date">
+                        {{ date | date:"j b" }}
+                    </div>
+                    {% endif %}
+                    {% if message.author == request.user %}
+                        <div class="my-message">
+                            <div class="my-time">{{ message.creation_time | date:"G:i" }}</div>
+                            <div class="my-text">{{ message.text|linebreaks }}</div>
+                        </div>
+                    {% else %}
+                        <div class="not-my-message">
+                            {% if chat.advert.author == request.user %}
+                                <div class="opp-avatar"><img src="{{ chat.customer.avatar.url }}"></div>
+                            {% else %}
+                                <div class="opp-avatar"><img src="{{ advert.author.avatar.url }}"></div>
+                            {% endif %}
+                            <div class="not-my-text">{{ message.text|linebreaks }}</div>
+                            <div class="not-my-time">{{ message.creation_time | date:"G:i" }}</div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
+    <div class="shadow-a"></div>
+    <div class="send-message">
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button>Отправить</button>
+        </form>
+    </div>
 </div>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <button>Отправить сообщение</button>
-    </form>
-{% endblock %}
+{% endblock c %}

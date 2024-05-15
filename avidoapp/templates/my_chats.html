@@ -1,11 +1,57 @@
 {% extends 'profile_base.html' %}
+{% load static %}
+{% load humanize %}
 {% block c %}
-<h3>Мои сообщения:</h3>
-{% for chat in my_chats %}
-{% if chat.advert.author == request.user %}
-<a href="{% url 'author_chat' chat.id %}"><div>{{ chat.customer }} | {{ chat.messagemodel_set.last.author }}: {{ chat.messagemodel_set.last.text }}</div></a>
-{% else %}
-<a href="{% url 'customer_chat' chat.advert.id %}"><div>{{ chat.advert.author }} | {{ chat.messagemodel_set.last.author }}: {{ chat.messagemodel_set.last.text }}</div></a>
-{% endif %}
-{% endfor %}
+<div>
+    <h2><b>Сообщения</b></h2><br>
+    {% for chat in my_chats %}
+        {% if chat.advert.author == request.user %}
+        <a href="{% url 'author_chat' chat.id %}">
+            <div class="chat">
+                <div>
+                    <div class="img1">
+                        {% if chat.advert.imagemodel_set.first.image %}
+                        <img src="{{ chat.advert.imagemodel_set.first.image.url }}">
+                        {% else %}
+                        <img src="{% static 'img/no_photo.png' %}">
+                        {% endif %}
+                    </div>
+                    <div class="img2"><img src="{{ chat.customer.avatar.url }}"></div>
+                </div>
+                <div class="chat-info">
+                    <span class="chat-info-a">{{ chat.customer.username }}</span><br>
+                    <span class="chat-info-b">{{ chat.advert }} · {{ chat.advert.price|intcomma }} ₽</span><br>
+                    <span class="chat-info-c">{{ chat.messagemodel_set.last.text }}</span>
+                </div>
+                <div class="last-msg">
+                    {{ chat.messagemodel_set.last.creation_time | date:"j b" }}
+                </div>
+            </div>
+        </a>
+        {% else %}
+        <a href="{% url 'customer_chat' chat.advert.id %}">
+            <div class="chat">
+                <div>
+                    <div class="img1">
+                        {% if chat.advert.imagemodel_set.first.image %}
+                        <img src="{{ chat.advert.imagemodel_set.first.image.url }}">
+                        {% else %}
+                        <img src="{% static 'img/no_photo.png' %}">
+                        {% endif %}
+                    </div>
+                    <div class="img2"><img src="{{ chat.advert.author.avatar.url }}"></div>
+                </div>
+                <div class="chat-info">
+                    <span class="chat-info-a">{{ chat.advert.author.username }}</span><br>
+                    <span class="chat-info-b">{{ chat.advert }} · {{ chat.advert.price|intcomma }} ₽</span><br>
+                    <span class="chat-info-c">{{ chat.messagemodel_set.last.text }}</span>
+                </div>
+                <div class="last-msg">
+                    {{ chat.messagemodel_set.last.creation_time | date:"j b" }}
+                </div>
+            </div>
+        </a>
+        {% endif %}
+    {% endfor %}
+</div>
 {% endblock c %}

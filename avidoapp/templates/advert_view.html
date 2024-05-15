@@ -4,7 +4,7 @@
 <div class="body-a">
     <div class="advert-left">
         <h2 class="title">{{ advert }}</h2>
-        {% if not advert.ad_object.job_title %}
+        {% if not advert.ad_object.job_title and images %}
             <div class="main-image"><img src="{{ main_image.image.url }}"></div>
             <div class="images">
                 {% for image in images %}
@@ -47,15 +47,15 @@
     </div>
     <div class="advert-right">
         <h2 class="title">{{ advert.price|intcomma }} ₽</h2>
-        <a href="#"><div class="phone">Позвонить через Авидо<p>{{ advert.author.phone|slice:":1" }} {{ advert.author.phone|slice:"1:4" }}
-         {{ advert.author.phone|slice:"4:7" }}-{{ advert.author.phone|slice:"7:9" }}-{{ advert.author.phone|slice:"9:11" }}</p></div></a><br>
         {% if user.is_authenticated and advert.author != request.user %}
+            <a href="#"><div class="phone">Позвонить через Авидо<p>{{ advert.author.phone|slice:":1" }} {{ advert.author.phone|slice:"1:4" }}
+         {{ advert.author.phone|slice:"4:7" }}-{{ advert.author.phone|slice:"7:9" }}-{{ advert.author.phone|slice:"9:11" }}</p></div></a><br>
             <a href="{% url 'customer_chat' advert.id %}"><div class="write-message">Написать сообщение</div></a>
         {% endif %}
         <div class="author-a">
             <span>
                 <b>{{ advert.author.username }}</b><br>{{ advert.author.first_name }} {{ advert.author.last_name }}<br>
-                <span class="joined">На Авидо с {{ advert.author.date_joined | date:"M Y"}}</span>
+                <span class="joined">На Авидо с {{ advert.author.date_joined | date:"b Y"}}</span>
             </span>
             <span><img src="{{ advert.author.avatar.url }}"></span>
         </div>

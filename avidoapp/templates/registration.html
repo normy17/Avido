@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-    <h2>Регистрация</h2>
-    {% if is_success %}
-        <p><b>Спасибо за регистрацию!</b></p><br>
-    {% else %}
-        <form method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button>Зарегистрироваться</button>
-        </form>
-    {% endif %}
+<div class="registration">
+    <div class="form">
+        <h2><b>Регистрация</b></h2><br>
+        {% if is_success %}
+        <div class="auth">
+            <p><b>Спасибо за регистрацию!</b></p><br>
+            <p><a href="{% url 'auth' %}">Войти в аккаунт</a></p>
+        </div>
+        {% else %}
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button>Зарегистрироваться</button>
+            </form>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

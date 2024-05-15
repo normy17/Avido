@@ -1,8 +1,7 @@
 from django.contrib.auth import login, authenticate, logout
-from django.db.models import Q
-from django.http import HttpResponse
+from django.db.models import Q, Max
 from django.shortcuts import render, redirect, get_object_or_404
-from django.utils import timezone
+from datetime import datetime, timedelta
 
 from avidoapp.forms import *
 
@@ -50,7 +49,8 @@ def my_profile_view(request):
 
 def my_chats_view(request):
     my_chats = ChatModel.objects.filter(advert__author=request.user) | ChatModel.objects.filter(customer=request.user)
-    return render(request, 'my_chats.html', {'my_chats': my_chats})
+    sorted_chats = my_chats.annotate(last_message_time=Max('messagemodel__creation_time')).order_by('-last_message_time')
+    return render(request, 'my_chats.html', {'my_chats': sorted_chats})
 
 
 def choice_advert_view(request):
@@ -105,6 +105,7 @@ def other_advert_view(request):
 
 
 def edit_advert_view(request, id):
+    is_edit = True
     advert = AdvertModel.objects.get(id=id)
     images = ImageModel.objects.filter(advert=advert)
     form = None
@@ -120,19 +121,27 @@ def edit_advert_view(request, id):
     form2 = AdvertForm(instance=advert)
     form3 = ImageForm()
     if request.method == "POST":
-        form = form(request.POST, instance=advert.ad_object)
+        if form:
+            form = form(request.POST, instance=advert.ad_object)
         form2 = AdvertForm(request.POST, instance=advert)
         form3 = ImageForm(request.POST, request.FILES)
-        if form.is_valid() and form2.is_valid():
+        if form and form.is_valid():
             form.save()
+        if form2.is_valid():
             form2.save()
             advert.publication_date = timezone.now()
             advert.save()
             for f in request.FILES.getlist('photos'):
                 images = ImageModel(image=f, advert=advert)
                 images.save()
-            return redirect('advert_view', id)
-    return render(request, "create_advert.html", {"form1": form1, 'form2': form2, 'form3': form3, 'images': images})
+            return redirect('advert_view', id, 0)
+    return render(request, "create_advert.html", {
+        "form1": form1,
+        'form2': form2,
+        'form3': form3,
+        'images': images,
+        'is_edit': is_edit
+    })
 
 
 def delete_advert_view(request, id):
@@ -144,8 +153,12 @@ def delete_advert_view(request, id):
 def advert_view(request, id, image=0):
     advert = get_object_or_404(AdvertModel, id=id)
     images = ImageModel.objects.filter(advert=id)
-    main_image = images[image]
-    return render(request, 'advert_view.html', {'advert': advert, 'images': images, 'main_image': main_image})
+    main_image = images[image] if images else None
+    return render(request, 'advert_view.html', {
+        'advert': advert,
+        'images': images,
+        'main_image': main_image
+    })
 
 
 def delete_image_view(request, id):
@@ -162,8 +175,17 @@ def customer_chat_view(request, advert_id):
     if ChatModel.objects.filter(advert=advert, customer=user).exists():
         chat = ChatModel.objects.get(advert=advert, customer=user)
         messages = MessageModel.objects.filter(chat=chat)
+        messages_by_date = {}
+        for message in messages:
+            original_date = message.creation_time
+            time_difference = timedelta(hours=3)
+            new_date = original_date + time_difference
+            date = new_date.date()
+            if date not in messages_by_date:
+                messages_by_date[date] = []
+            messages_by_date[date].append(message)
     else:
-        messages = None
+        messages_by_date = None
     if request.method == 'POST':
         form = MessageForm(request.POST)
         if form.is_valid():
@@ -177,13 +199,26 @@ def customer_chat_view(request, advert_id):
             message.author = user
             message.save()
             return redirect('customer_chat', advert_id)
-    return render(request, 'chat.html', {'form': form, 'advert': advert, 'messages': messages})
+    return render(request, 'chat.html', {
+        'form': form,
+        'advert': advert,
+        'messages_by_date': messages_by_date
+    })
 
 
 def author_chat_view(request, id):
     chat = ChatModel.objects.get(id=id)
     advert = chat.advert
     messages = MessageModel.objects.filter(chat=chat)
+    messages_by_date = {}
+    for message in messages:
+        original_date = message.creation_time
+        time_difference = timedelta(hours=3)
+        new_date = original_date + time_difference
+        date = new_date.date()
+        if date not in messages_by_date:
+            messages_by_date[date] = []
+        messages_by_date[date].append(message)
     form = MessageForm()
     if request.method == 'POST':
         form = MessageForm(request.POST)
@@ -193,7 +228,12 @@ def author_chat_view(request, id):
             message.author = advert.author
             message.save()
             return redirect('author_chat', id)
-    return render(request, 'chat.html', {'form': form, 'advert': advert, 'messages': messages})
+    return render(request, 'chat.html', {
+        'form': form,
+        'advert': advert,
+        'chat': chat,
+        'messages_by_date': messages_by_date
+    })
 
 
 def registration_view(request):
@@ -207,7 +247,7 @@ def registration_view(request):
             if 'avatar' in request.FILES:
                 user.avatar = request.FILES['avatar']
             else:
-                user.avatar = 'images/istockphoto-1337144146-612x612.jpg'
+                user.avatar = 'images/default-avatar.jpg'
             user.save()
             is_success = True
     return render(request, "registration.html", {
@@ -235,16 +275,9 @@ def auth_view(request):
             if user is None:
                 form.add_error(None, "Неправильный логин или пароль")
             else:
-                if user.is_block == True and user.time_unblock > timezone.now():
-                    return HttpResponse('Вы заблокированы')
-                else:
-                    user.is_block = False
-                    user.save()
                 login(request, user)
                 return redirect("main")
-    return render(request, 'auth.html', {
-        "form": form
-    })
+    return render(request, 'auth.html', {"form": form})
 
 
 def logout_view(request):

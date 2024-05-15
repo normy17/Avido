@@ -3,21 +3,21 @@
     margin-right: 15px;
 }
 .navbar-a {
-    margin-left: 250px;
+    margin-left: 27vh;
 }
 a:hover {
-    color: red;
+    color: #ff6163;
     text-decoration: none;
 }
 .navbar-b {
-    margin-right: 250px;
+    margin-right: 20vh;
 }
 .navbar-b a {
     color: white;
     margin-right: 15px;
 }
 .navbar-b a:hover {
-    color: red;
+    color: #ff6163;
 }
 .navbar-b img {
     border-radius: 100px;
@@ -27,15 +27,12 @@ a:hover {
 }
 .navbar-b-span {
     background-color: deepskyblue;
-    padding: 7px;
-    padding-left: 20px;
+    padding: 7px 16px 7px 16px;
     border-radius: 10px;
-}
-.navbar-b-span a:hover {
-    color: white;
 }
 .navbar-b-span:hover {
     background-color: #05a3f7;
+    color: white;
 }
 .search input {
     width: 800px;
@@ -59,7 +56,8 @@ a:hover {
 .search {
     margin-top: 25px;
     display: flex;
-    margin-left: 270px;
+    margin-left: 29vh;
+    margin-right: 15vh;
 }
 .search img {
     width: 130px;
@@ -67,31 +65,44 @@ a:hover {
     margin-top: -10px;
 }
 .title-a {
-    margin-left: 277px;
-    margin-top: 30px;
+    margin-top: 20px;
+    margin-left: 30vh;
+    margin-right: 15vh;
 }
 .adverts {
     display: flex;
     flex-wrap: wrap;
-    margin-left: 330px;
+    margin-left: 30vh;
+    margin-right: 15vh;
     margin-top: 20px;
     padding-bottom: 50px;
 }
+.advert-img {
+    width: 265px;
+    height: 170px;
+    overflow: hidden;
+}
 .advert img {
-    width: 80%;
-    height: 65%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     margin-bottom: 8px;
 }
+.advert-title {
+    width: 100%;
+    margin-top: 5px;
+}
 .advert {
-    width: 325px;
-    margin-left: -50px;
-    overflow: hidden;
+    width: 265px;
     padding-bottom: 10px;
     line-height: 1.2;
+    margin-right: 10px;
 }
-.advert a {
+.advert-title a {
     color: deepskyblue;
+}
+.advert-title a:hover {
+    color: #ff6163;
 }
 .advert-info {
     color: gray;
@@ -187,4 +198,442 @@ a:hover {
 }
 .advert-right {
     margin-right: 300px;
+}
+.registration {
+    width: 100%;
+    height: 80vh;
+    display: grid;
+    place-items: center;
+}
+.form {
+    background-color: gainsboro;
+    font-family: sans-serif;
+    padding: 50px 0 50px 60px;
+    border-radius: 20px;
+}
+.form input {
+    width: 400px;
+    height: 40px;
+    border-radius: 5px;
+    border: 0px;
+    padding-left: 12px;
+}
+.form input:hover {
+    background-color: #ebeae8;
+}
+.form input:focus {
+    outline: 3px solid #80d4ff;
+}
+.form button {
+    border: 0px;
+    border-radius: 5px;
+    background-color: #00aaff;
+    color: white;
+    padding: 7px 12px 7px 12px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.form button:hover {
+    background-color: #0099f7;
+}
+.auth {
+    padding-right: 60px;
+    min-width: 400px; 
+}
+.edit-profile input {
+    width: 400px;
+    height: 40px;
+    border-radius: 5px;
+    border: 0px;
+    padding-left: 12px;
+    background-color: #f2f1f0;
+}
+.edit-profile input:hover {
+    background-color: #ebeae8;
+}
+.edit-profile input:focus {
+    outline: 3px solid #80d4ff;
+}
+.edit-profile button {
+    border: 0px;
+    border-radius: 5px;
+    background-color: #00aaff;
+    color: white;
+    padding: 7px 12px 7px 12px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+}
+.edit-profile button:hover {
+    background-color: #0099f7;
+}
+#id_avatar:hover {
+    background-color: gainsboro;
+}
+#id_avatar:focus {
+    outline: none;
+}
+.my-profile {
+    display: flex;
+}
+.profile {
+    margin-left: 280px;
+    margin-top: 50px;
+    font-family: Trebuchet MS;
+    line-height: 1.8;
+    font-size: 18px;
+}
+.profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;    
+}
+.profile a {
+    color: #0099f7;
+}
+.profile a:hover {
+    color: #ff6163;
+}
+.block-c {
+    margin-left: 100px;
+    margin-top: 40px;
+}
+.choices {
+    margin-left: 280px;
+    margin-top: 100px;
+    font-family: Trebuchet MS;
+}
+.title-b {
+    margin-left: 20px;
+    font-size: 34px;
+    font-weight: 600;
+}
+.choices-b {
+    width: 300px;
+    color: black;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 22px;
+}
+.choices-b:hover {
+    background-color: #f2f1f0;
+}
+.form-b {
+    width: 700px;
+    margin-left: 280px;
+    margin-top: 24px;
+}
+.inputs {
+    display: flex;
+    justify-content: space-between;
+}
+.inputs input {
+    margin-top: -10px;
+    border-radius: 12px;
+}
+.inputs select {
+    width: 400px;
+    height: 40px;
+    border-radius: 5px;
+    border: 0px;
+    padding-left: 12px;
+    background-color: #f2f1f0;
+    margin-top: -10px;
+    border-radius: 12px;
+}
+.inputs select:hover {
+    background-color: #ebeae8;
+}
+.inputs select:focus {
+    outline: 3px solid #80d4ff;
+}
+.inputs textarea {
+    width: 600px;
+    height: 120px;
+    border-radius: 5px;
+    border: 0px;
+    padding-left: 12px;
+    background-color: #f2f1f0;
+    margin-top: -10px;
+    border-radius: 12px;
+}
+.inputs textarea:hover {
+    background-color: #ebeae8;
+}
+.inputs textarea:focus {
+    outline: 3px solid #80d4ff;
+}
+#id_is_displayed {
+    height: 25px;
+}
+#id_is_displayed:focus {
+    outline: none;
+}
+#id_photos {
+    background-color: white;
+}
+.form-b button {
+    background-color: black;
+    color: white;
+    width: 230px;
+    height: 50px;
+    border-radius: 15px;
+}
+.form-b button:hover {
+    background-color: #292929;
+}
+.images-a {
+    display: flex;
+    flex-wrap: wrap;
+}
+.images-a-div {
+    margin-left: 10px;
+}
+.images-a-div-a {
+    overflow: hidden;
+    width: 100px;
+    height: 70px;
+}
+.images-a img {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+}
+.images-a a {
+    color: lightgray;
+}
+.images-a-span {
+    background-color: white;
+    position: relative;
+    top: -65px;
+    left: 70px;
+    border-radius: 100px;
+    padding: 0 6px 2px 6px;
+}
+.my-advert {
+    display: flex;
+    margin-top: 18px;
+}
+.my-advert-img {
+    overflow: hidden;
+    width: 235px;
+    height: 170px;
+}
+.my-advert-img img {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+}
+.my-advert-info {
+    margin-left: 15px;
+    width: 320px;
+}
+.my-advert-info a {
+    font-size: 22px;
+    font-weight: 600;
+    color: #00aaff;
+    font-family: Trebuchet MS;
+}
+.my-advert-info a:hover {
+    color: #ff6163;
+}
+.my-advert-price {
+    font-size: 20px;
+}
+.my-advert-location {
+    color: gray;
+}
+.actions {
+    text-align: right;
+    margin-left: 200px;
+}
+.chat {
+    display: flex;
+    font-family: Trebuchet MS;
+    padding: 25px;
+    border-radius: 15px;
+}
+.chat:hover {
+    background-color: #f7f7f5;
+}
+.img1 {
+    overflow: hidden;
+    width: 70px;
+    height: 50px;
+}
+.img1 img {
+    height: 100%;
+    width: 100%;
+    border-radius: 5px;
+    object-fit: cover;
+}
+.img2 {
+    overflow: hidden;
+    width: 30px;
+    height: 30px;
+    margin-top: -60px;
+    margin-left: -10px;
+}
+.img2 img {
+    height: 100%;
+    width: 100%;
+    border: 2px solid white;
+    border-radius: 100%;
+    object-fit: cover;
+}
+.chat-info {
+    margin-top: -8px;
+    margin-left: 15px;
+    line-height: 1.3;
+    width: 300px;
+}
+.chat-info-a {
+    font-size: 18px;
+    font-weight: 700;
+    color: black;
+}
+.chat-info-b {
+    font-size: 16px;
+    color: black;
+}
+.chat-info-c {
+    font-size: 16px;
+    color: darkgray;
+}
+.last-msg {
+    margin-top: -8px;
+    margin-left: 300px;
+    color: darkgray;
+}
+.chat-header {
+    display: flex;
+    width: 725px;
+}
+.back {
+    font-size: 26px;
+    color: black;
+    border-radius: 100%;
+    padding: 0 13px 10px 13px;
+}
+.back:hover {
+    background-color: #ebeae8;
+}
+.advert-imgs {
+    margin-left: 10px;
+}
+.chat-window {
+    margin-top: 15px;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0) 3%);
+    height: 620px;
+    position: relative;
+}
+.shadow-a {
+    background: linear-gradient(360deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0) 100%);
+    width: 100%;
+    height: 20px;
+}
+.messages {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+    max-height: 600px;
+    padding-right: 20px;
+}
+.messages::-webkit-scrollbar {
+    width: 7px;
+}
+.messages::-webkit-scrollbar-thumb {
+    background-color: lightgray;
+}
+.messages::-webkit-scrollbar-button {
+    display: none;
+}
+.chat-date {
+    text-align: center;
+    margin: 20px 0 20px 0;
+    font-weight: 600;
+}
+.my-message {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+.my-text {
+    background-color: #e6f6ff;
+    padding: 10px 17px 0 16px;
+    border-radius: 15px;
+}
+.my-time {
+    margin-bottom: 15px;
+    margin-right: 7px;
+    font-size: 12px;
+    color: gray;
+}
+.not-my-message {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    margin-bottom: 10px;
+}
+.opp-avatar {
+    overflow: hidden;
+    width: 33px;
+    height: 33px;
+    vertical-align: bottom;
+}
+.opp-avatar img {
+    height: 100%;
+    width: 100%;
+    border-radius: 100%;
+    object-fit: cover;
+}
+.not-my-text {
+    background-color: #f2f1f0;
+    padding: 10px 17px 0 16px;
+    border-radius: 15px;
+    margin-left: 10px;
+}
+.not-my-time {
+    margin-bottom: 15px;
+    margin-left: 7px;
+    font-size: 12px;
+    color: gray;
+}
+.send-message {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+}
+.send-message textarea {
+    width: 600px;
+    height: 40px;
+    padding: 7px 0 0 15px;
+    border: none;
+    outline: 3px solid lightgray;
+    border-radius: 10px;
+    margin-bottom: -13px;
+}
+.send-message textarea::-webkit-resizer {
+    display: none;
+}
+.send-message textarea:focus {
+    outline: 3px solid #80d4ff;
+}
+.send-message button {
+    margin-left: 10px;
+    width: 100px;
+    height: 45px;
+    color: gray;
+    border: none;
+    border-radius: 10px;
+    background-color: lightgray;
+    align-self: flex-start;
+}
+.send-message button:hover {
+    background-color: darkgray;
 }

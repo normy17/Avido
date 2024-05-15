@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<h3>Какое объявление создать?</h3>
-<a href="{% url 'create_advert' 1 %}">Авто</a>
-<a href="{% url 'create_advert' 2 %}">Недвижимость</a>
-<a href="{% url 'create_advert' 3 %}">Работа</a>
-<a href="{% url 'other_advert' %}">Прочее</a>
+<div class="choices">
+    <span class="title-b">Новое объявление</span><br><br>
+    <a href="{% url 'create_advert' 1 %}"><div class="choices-b"><span>Авто</span><span>&#9002;</span></div></a>
+    <a href="{% url 'create_advert' 2 %}"><div class="choices-b"><span>Недвижимость</span><span>&#9002;</span></div></a>
+    <a href="{% url 'create_advert' 3 %}"><div class="choices-b"><span>Работа</span><span>&#9002;</span></div></a>
+    <a href="{% url 'other_advert' %}"><div class="choices-b"><span>Прочее</span><span>&#9002;</span></div></a>
+</div>
 {% endblock %}

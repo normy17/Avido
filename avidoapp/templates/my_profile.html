@@ -1,16 +1,35 @@
 {% extends 'profile_base.html' %}
+{% load static %}
+{% load humanize %}
 {% block c %}
-<h3>Мои объявления:</h3>
-{% for advert in my_adverts %}
-    <a href="{% url 'advert_view' advert.id 0 %}"><img src="{{ advert.imagemodel_set.first.image.url }}" style="width: 230px; height: 160px"></a><br>
-    <a href="{% url 'advert_view' advert.id 0 %}">{{ advert }}</a><br>
-    <b>{{ advert.price }} ₽</b><br>
-    Казань, {{ advert.address }}<br>
-    <a href="{% url 'edit_advert' advert.id %}">Редактировать</a> <a href="{% url 'delete_advert' advert.id %}">Удалить объявление</a>
-    {% if advert.is_displayed %}
-        Отображается
-    {% else %}
-        Не отбражается
-    {% endif %}<br><br>
-{% endfor %}
+<div class="my-adverts">
+    <h2><b>Мои объявления</b></h2><hr><br>
+    {% for advert in my_adverts %}
+    <div class="my-advert">
+        <div class="my-advert-img">
+            <a href="{% url 'advert_view' advert.id 0 %}">
+                {% if advert.imagemodel_set.first.image %}
+                <img src="{{ advert.imagemodel_set.first.image.url }}">
+                {% else %}
+                <img src="{% static 'img/no_photo.png' %}">
+                {% endif %}
+            </a>
+        </div>
+        <div class="my-advert-info">
+            <a href="{% url 'advert_view' advert.id 0 %}">{{ advert }}</a><br>
+            <span class="my-advert-price"><b>{{ advert.price|intcomma }} ₽</b></span><br>
+            <span class="my-advert-location">Республика Татарстан, Казань,<br>{{ advert.address }}</span>
+        </div>
+        <div class="actions">
+            {% if advert.is_displayed %}
+                Объявление отображается
+            {% else %}
+                Объявление не отбражается
+            {% endif %}<br>
+            <a href="{% url 'edit_advert' advert.id %}">Редактировать</a><br>
+            <a href="{% url 'delete_advert' advert.id %}">Удалить</a>
+        </div>
+    </div><br>
+    {% endfor %}
+</div>
 {% endblock c %}

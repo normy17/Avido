@@ -4,7 +4,7 @@ from .models import *
 
 
 class RegistrationForm(forms.ModelForm):
-    password2 = forms.CharField()
+    password2 = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Повторите пароль'}))
 
     def clean(self):
         cleaned_data = super().clean()
@@ -15,19 +15,52 @@ class RegistrationForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('email', 'username', 'first_name', 'last_name', 'phone', 'avatar', 'password', 'password2')
+        labels = {
+            'email': '',
+            'username': '',
+            'first_name': '',
+            'last_name': '',
+            'phone': '',
+            'password': ''
+        }
+        widgets = {
+            'email': forms.EmailInput(attrs={'placeholder': 'Email'}),
+            'username': forms.TextInput(attrs={'placeholder': 'Логин'}),
+            'first_name': forms.TextInput(attrs={'placeholder': 'Имя'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Фамилия'}),
+            'phone': forms.TextInput(attrs={'placeholder': 'Телефон'}),
+            'password': forms.PasswordInput(attrs={'placeholder': 'Пароль'})
+        }
+        help_texts = {
+            'username': ''
+        }
 
 
 class AuthForm(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput())
+    username = forms.CharField(label='', widget=forms.TextInput(attrs={'placeholder': 'Логин'}))
+    password = forms.CharField(label='', widget=forms.PasswordInput(attrs={'placeholder': 'Пароль'}))
 
 
 class EditProfileForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'phone', 'avatar')
+        labels = {
+            'username': '',
+            'first_name': '',
+            'last_name': '',
+            'phone': '',
+            'avatar': ''
+        }
         widgets = {
-            'avatar': forms.FileInput()
+            'avatar': forms.FileInput(),
+            'username': forms.TextInput(attrs={'placeholder': 'Логин'}),
+            'first_name': forms.TextInput(attrs={'placeholder': 'Имя'}),
+            'last_name': forms.TextInput(attrs={'placeholder': 'Фамилия'}),
+            'phone': forms.TextInput(attrs={'placeholder': 'Телефон'}),
+        }
+        help_texts = {
+            'username': ''
         }
 
 
@@ -35,12 +68,14 @@ class CarForm(forms.ModelForm):
     class Meta:
         model = AdObjectModel
         fields = ('car_make', 'car_model', 'year_of_issue', 'color', 'body_type', 'fuel_type', 'mileage')
+        labels = {'mileage': 'Пробег, км'}
 
 
 class HouseForm(forms.ModelForm):
     class Meta:
         model = AdObjectModel
         fields = ('property_type', 'area', 'rooms', 'floors', 'state')
+        labels = {'area': 'Площадь, м²'}
 
 
 class JobForm(forms.ModelForm):
@@ -53,6 +88,7 @@ class AdvertForm(forms.ModelForm):
     class Meta:
         model = AdvertModel
         fields = ('title', 'description', 'price', 'address', 'is_displayed')
+        labels = {'is_displayed': 'Показывать всем'}
 
 
 class ImageForm(forms.Form):
@@ -63,3 +99,9 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = MessageModel
         fields = ('text', )
+        labels = {
+            'text': ''
+        }
+        widgets = {
+            'text': forms.Textarea(attrs={'placeholder': 'Написать сообщение'}),
+        }

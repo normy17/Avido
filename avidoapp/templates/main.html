@@ -31,8 +31,16 @@
 <div class="adverts">
     {% for advert in adverts %}
         <div class="advert">
-            <a href="{% url 'advert_view' advert.id 0 %}"><img src="{{ advert.imagemodel_set.first.image.url }}"></a><br>
-            <span class="ad"><b><a href="{% url 'advert_view' advert.id 0 %}">{{ advert }}</a></b><br></span>
+            <div class="advert-img">
+                <a href="{% url 'advert_view' advert.id 0 %}">
+                    {% if advert.imagemodel_set.first.image %}
+                    <img src="{{ advert.imagemodel_set.first.image.url }}">
+                    {% else %}
+                    <img src="{% static 'img/no_photo.png' %}">
+                    {% endif %}
+                </a>
+            </div>
+            <div class="advert-title"><b><a href="{% url 'advert_view' advert.id 0 %}">{{ advert }}</a></b></div>
             <b>{{ advert.price|intcomma }} ₽</b><br>
             <span class="advert-info">Казань, {{ advert.address }}<br>
             {{ advert.publication_date }}</span>

@@ -38,9 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'rest_framework',
     'avidoapp',
-    'avidoapi',
     'multiupload'
 ]
 
@@ -121,7 +119,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'avidoapp/static/static_root'
 
 STATICFILES_DIRS = [
    os.path.join(BASE_DIR, 'avidoapp/static'),

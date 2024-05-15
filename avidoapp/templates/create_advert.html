@@ -1,13 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form1.as_p }}
-        {{ form2.as_p }}
-        {{ form3.as_p }}
-        <button>Сохранить объявление</button>
-    </form><br>
-    {% for image in images %}
-        <img src="{{ image.image.url }}" width="256" height="144"><a href="{% url 'delete_image' image.id %}">Удалить</a>
-    {% endfor %}
+<div class="edit-profile">
+    <div class="form-b">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form1 %}
+                <div class="inputs">
+                    <span>{{ field.label }}</span><span>{{ field }}</span>
+                </div><br>
+            {% endfor %}
+            {% for field in form3 %}
+                <div class="inputs">
+                    <span>{{ field.label }}</span><span>{{ field }}</span>
+                </div><br>
+            {% endfor %}
+            {% if images %}
+            <div class="images-a">
+                {% for image in images %}
+                    <div class="images-a-div"><div class="images-a-div-a"><img src="{{ image.image.url }}"></div><a href="{% url 'delete_image' image.id %}"><span class="images-a-span">×</span></a></div>
+                {% endfor %}
+            </div><br>
+            {% endif %}
+            {% for field in form2 %}
+                <div class="inputs">
+                    <span>{{ field.label }}</span><span>{{ field }}</span>
+                </div><br>
+            {% endfor %}
+            {% if is_edit %}
+            <button>Сохранить изменения</button>
+            {% else %}
+            <button>Разместить</button>
+            {% endif %}
+        </form><br>
+    </div>
+</div>
 {% endblock %}
