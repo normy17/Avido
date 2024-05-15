@@ -3,14 +3,14 @@
     margin-right: 15px;
 }
 .navbar-a {
-    margin-left: 27vh;
+    margin-left: 13vw;
 }
 a:hover {
     color: #ff6163;
     text-decoration: none;
 }
 .navbar-b {
-    margin-right: 20vh;
+    margin-right: 11vw;
 }
 .navbar-b a {
     color: white;
@@ -56,8 +56,7 @@ a:hover {
 .search {
     margin-top: 25px;
     display: flex;
-    margin-left: 29vh;
-    margin-right: 15vh;
+    margin-left: 14.5vw;
 }
 .search img {
     width: 130px;
@@ -66,14 +65,13 @@ a:hover {
 }
 .title-a {
     margin-top: 20px;
-    margin-left: 30vh;
-    margin-right: 15vh;
+    margin-left: 15vw;
 }
 .adverts {
     display: flex;
     flex-wrap: wrap;
-    margin-left: 30vh;
-    margin-right: 15vh;
+    margin-left: 15vw;
+    margin-right: 11vw;
     margin-top: 20px;
     padding-bottom: 50px;
 }
@@ -108,7 +106,9 @@ a:hover {
     color: gray;
 }
 .body-a {
-    margin: 30px 280px 0px 280px;
+    margin-top: 30px;
+    margin-left: 15vw;
+    margin-right: 15vw;
     display: flex;
     justify-content: space-between;
 }
@@ -197,7 +197,7 @@ a:hover {
     color: gray;
 }
 .advert-right {
-    margin-right: 300px;
+    margin-left: 150px;
 }
 .registration {
     width: 100%;
@@ -274,7 +274,7 @@ a:hover {
     display: flex;
 }
 .profile {
-    margin-left: 280px;
+    margin-left: 30vh;
     margin-top: 50px;
     font-family: Trebuchet MS;
     line-height: 1.8;
@@ -446,7 +446,7 @@ a:hover {
 }
 .actions {
     text-align: right;
-    margin-left: 200px;
+    float: right;
 }
 .chat {
     display: flex;
@@ -525,7 +525,7 @@ a:hover {
 .chat-window {
     margin-top: 15px;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0) 3%);
-    height: 620px;
+    height: 62vh;
     position: relative;
 }
 .shadow-a {
@@ -540,7 +540,7 @@ a:hover {
     display: flex;
     flex-direction: column;
     overflow: auto;
-    max-height: 600px;
+    max-height: 60vh;
     padding-right: 20px;
 }
 .messages::-webkit-scrollbar {
@@ -605,7 +605,6 @@ a:hover {
     color: gray;
 }
 .send-message {
-    margin-top: 18px;
     display: flex;
     flex-direction: column;
 }
@@ -616,7 +615,7 @@ a:hover {
     border: none;
     outline: 3px solid lightgray;
     border-radius: 10px;
-    margin-bottom: -13px;
+    margin-bottom: -48px;
 }
 .send-message textarea::-webkit-resizer {
     display: none;
@@ -625,7 +624,7 @@ a:hover {
     outline: 3px solid #80d4ff;
 }
 .send-message button {
-    margin-left: 10px;
+    margin-left: 610px;
     width: 100px;
     height: 45px;
     color: gray;
