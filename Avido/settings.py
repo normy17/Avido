@@ -39,8 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'avidoapp',
-    'multiupload',
-    'django-durationfield'
+    'multiupload'
 ]
 
 MIDDLEWARE = [
