@@ -134,7 +134,7 @@ def edit_advert_view(request, id):
             for f in request.FILES.getlist('photos'):
                 images = ImageModel(image=f, advert=advert)
                 images.save()
-            return redirect('advert_view', id, 0)
+            return redirect('advert_view', id)
     return render(request, "create_advert.html", {
         "form1": form1,
         'form2': form2,
