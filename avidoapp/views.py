@@ -150,14 +150,12 @@ def delete_advert_view(request, id):
     return redirect('my_profile')
 
 
-def advert_view(request, id, image=0):
+def advert_view(request, id):
     advert = get_object_or_404(AdvertModel, id=id)
     images = ImageModel.objects.filter(advert=id)
-    main_image = images[image] if images else None
     return render(request, 'advert_view.html', {
         'advert': advert,
-        'images': images,
-        'main_image': main_image
+        'images': images
     })
 
 

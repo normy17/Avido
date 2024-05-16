@@ -1,14 +1,17 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load humanize %}
 {% block content %}
 <div class="body-a">
     <div class="advert-left">
         <h2 class="title">{{ advert }}</h2>
         {% if not advert.ad_object.job_title and images %}
-            <div class="main-image"><img src="{{ main_image.image.url }}"></div>
+            <div class="main-image"><img src="{{ advert.imagemodel_set.first.image.url }}"></div>
             <div class="images">
                 {% for image in images %}
-                    <a href="{% url 'advert_view' advert.id forloop.counter0 %}"><div class="advert-image"><img src="{{ image.image.url }}"></div></a>
+                    <div class="advert-image" data-image-url="{{ image.image.url }}">
+                        <img src="{{ image.image.url }}">
+                    </div>
                 {% endfor %}<br>
             </div>
         {% endif %}
